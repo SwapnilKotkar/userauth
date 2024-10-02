@@ -13,7 +13,7 @@ export async function POST(request: Request, response: Response) {
 	try {
 		await connectToDatabase();
 
-		const isUserExists = await User.findOne({ email: body.email });
+		// const isUserExists = await User.findOne({ email: body.email });
 
 		// ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️----PENDING----⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 		// if (isUserExists) {
@@ -37,7 +37,7 @@ export async function POST(request: Request, response: Response) {
 		if (!foundUser) {
 			return NextResponse.json(
 				{
-					error: "User not found",
+					error: "Invalid credentials.",
 				},
 				{ status: 409 }
 			);

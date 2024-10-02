@@ -41,9 +41,9 @@ export async function POST(request: Request) {
 			);
 		}
 
-		if (!body.emailToken) {
-			throw new Error("Email token is missing");
-		}
+		// if (!body.emailToken) {
+		// 	throw new Error("Email token is missing");
+		// }
 
 		const hashedEmailToken = CryptoJS.SHA256(body.emailToken).toString();
 
