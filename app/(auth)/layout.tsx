@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "../globals.css";
 import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const fontSans = FontSans({
 	subsets: ["latin"],
@@ -26,7 +27,26 @@ export default async function AuthLayout({
 					fontSans.variable
 				)}
 			>
-				{children}
+				<ThemeProvider
+					attribute="class"
+					defaultTheme="dark-blue"
+					enableSystem
+					disableTransitionOnChange
+					themes={[
+						"light",
+						"dark",
+						"light-green",
+						"dark-green",
+						"light-rose",
+						"dark-rose",
+						"light-yellow",
+						"dark-yellow",
+						"light-blue",
+						"dark-blue",
+					]}
+				>
+					{children}
+				</ThemeProvider>
 			</body>
 		</html>
 	);

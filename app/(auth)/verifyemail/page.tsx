@@ -1,3 +1,5 @@
+"use client";
+
 import VerifyEmail from "@/components/auth/VerifyEmail";
 import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
 import React from "react";

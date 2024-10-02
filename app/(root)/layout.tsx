@@ -32,7 +32,7 @@ export default async function RootLayout({
 			>
 				<ThemeProvider
 					attribute="class"
-					defaultTheme="light-rose"
+					defaultTheme="dark-blue"
 					enableSystem
 					disableTransitionOnChange
 					themes={[
