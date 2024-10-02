@@ -1,4 +1,3 @@
-//verifyemail/page.tsx
 import VerifyEmail from "@/components/auth/VerifyEmail";
 import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
 import React, { Suspense } from "react";
