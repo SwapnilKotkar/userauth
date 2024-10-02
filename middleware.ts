@@ -7,8 +7,8 @@ export function middleware(request: NextRequest) {
 	const publicRoutes = [
 		"/signin",
 		"/signup",
-		// "/forgotpassword",
-		// "/resetpassword",
+		"/forgotpassword",
+		"/resetpassword",
 		// "/verifyotp",
 		"/verifyemail",
 	];
@@ -27,6 +27,12 @@ export function middleware(request: NextRequest) {
 			url.pathname === "/verifyemail" &&
 			(!emailParam || emailParam.trim() === "") &&
 			(!emailToken || emailToken.trim() === "")
+		) {
+			return NextResponse.redirect(new URL(`/signin`, request.url)); // Redirect to signin if email is missing or empty
+		} else if (
+			url.pathname === "/resetpassword" &&
+			(!emailParam || emailParam.trim() === "") &&
+			(!resetPasswordToken || resetPasswordToken.trim() === "")
 		) {
 			return NextResponse.redirect(new URL(`/signin`, request.url)); // Redirect to signin if email is missing or empty
 		}
