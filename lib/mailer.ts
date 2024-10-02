@@ -51,6 +51,7 @@ export async function createEmailVerificationToken(email: string) {
 		});
 
 		const verifyEmailToken = CryptoJS.lib.WordArray.random(16).toString();
+		console.log("verifyEmailToken", verifyEmailToken);
 		const hashedVerifyEmailToken = CryptoJS.SHA256(verifyEmailToken).toString(
 			CryptoJS.enc.Hex
 		);
