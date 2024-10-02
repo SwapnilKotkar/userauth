@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import User from "@/models/user.model";
 import { createUser } from "@/lib/actions/user.actions";
 import { createEmailVerificationToken } from "@/lib/mailer";
+import { generateTokenAndSetCookie } from "@/lib/generateTokenAndSetCookie";
 
 export async function POST(request: Request) {
 	let body = await request.json();
@@ -14,6 +15,8 @@ export async function POST(request: Request) {
 
 		const isUserExists = await User.findOne({ email: body.email });
 
+		// ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️----PENDING----⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+		// let isProviderExists = await isUserProviderLoggedIn(isUserExists);
 		// if (isUserExists) {
 		// 	let response = await isUserProviderLoggedIn({ email: body.email });
 
@@ -27,26 +30,34 @@ export async function POST(request: Request) {
 		// 	}
 		// }
 
-		// if (isUserExists && !isUserExists.isEmailVerified) {
-		// 	let response = await createEmailVerificationToken2(body.email);
+		if (isUserExists && !isUserExists.isEmailVerified) {
+			let response = await createEmailVerificationToken(body.email);
 
-		// 	if (response.success) {
-		// 		return NextResponse.json(
-		// 			{
-		// 				message:
-		// 					"User already registered. Email verification link sent your email address, please check your inbox.",
-		// 			},
-		// 			{ status: 200 }
-		// 		);
-		// 	} else {
-		// 		return NextResponse.json(
-		// 			{ success: false, error: response.error },
-		// 			{
-		// 				status: 500,
-		// 			}
-		// 		);
-		// 	}
-		// }
+			if (response.success) {
+				return NextResponse.json(
+					{
+						message:
+							"User already registered. Email verification link sent your email address, please check your inbox.",
+					},
+					{ status: 200 }
+				);
+			} else {
+				return NextResponse.json(
+					{ success: false, error: response.error },
+					{
+						status: 500,
+					}
+				);
+			}
+		} else if (isUserExists && isUserExists.isEmailVerified) {
+			return NextResponse.json(
+				{
+					error:
+						"User already exists. Please try to signin or create a new account with new email address.",
+				},
+				{ status: 409 }
+			);
+		}
 
 		const newUserData = await createUser({
 			email: body.email,
