@@ -64,6 +64,7 @@ const SignUp = () => {
 				setSignupSuccess(response.data.message);
 				if (response.data.message) {
 					setSignupSuccess(response.data.message);
+					form.reset();
 				} else {
 					setSignupError(response.data.error);
 				}
@@ -82,17 +83,17 @@ const SignUp = () => {
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className="z-10 space-y-3 min-w-[400px] mx-auto"
+				className="z-10 space-y-3 min-w-[400px] max-w-[500px] mx-auto"
 			>
 				{signupError && (
-					<Alert variant="destructive">
+					<Alert variant="destructive" className="bg-white">
 						<ExclamationTriangleIcon className="h-4 w-4" />
 						<AlertTitle>Error</AlertTitle>
 						<AlertDescription>{signupError}</AlertDescription>
 					</Alert>
 				)}
 				{signupSuccess && (
-					<Alert variant="default" className="border-green-500">
+					<Alert variant="default" className="bg-white border-green-500">
 						<Check className="h-4 w-4" color="green" />
 						<AlertTitle className="text-green-500 font-medium">
 							Success

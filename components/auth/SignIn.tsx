@@ -4,6 +4,7 @@ import React, { useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import Cookies from "js-cookie";
 
 import { Label } from "../ui/label";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -68,71 +69,24 @@ const SignIn = () => {
 
 				let response = await AXIOS.post("/api/user/signin", data);
 
-				// const response = await getUser({ email: data.email });
 				console.log("found_user_data", response);
 
-				// if (!userData.data.isEmailVerified) {
-				// 	let response = await createEmailVerificationToken(data.email);
+				const token = Cookies.get("token");
+				console.log("Token from cookie:", token);
 
-				// 	console.log("email_verification_token_response", response);
-
-				// 	if (response.status !== 200) {
-				// 		setSigninError(response.message);
-				// 		return;
-				// 	}
-
-				// 	setSigninSuccess(
-				// 		"Email verification link sent your email address, please check your inbox."
-				// 	);
-
-				// 	return;
-				// }
-
-				const result = { success: 1, error: 1 };
-
-				alert("signin 123");
-
-				console.log("signin_result", result);
-
-				if (result?.error) {
-					switch (result?.error) {
-						// case "CredentialsSignin":
-						// 	setSigninError("Invalid email or password");
-						// 	break;
-						// case "EmailLinkedWithProvider":
-						// 	setSigninError(
-						// 		"The email you're trying to sign in with is already linked with the following providers such as google, etc. Please sign in using the respective provider."
-						// 	);
-						// 	break;
-						// case "EmailNotVerified":
-						// 	// setSigninError(
-						// 	// 	"Email is not verified. Please Check your inbox to get the the verification link and complete registration."
-						// 	// );
-
-						// 	let response = await createEmailVerificationToken(data.email);
-
-						// 	console.log("email_verification_token_response", response);
-
-						// 	if (response.status !== 200) {
-						// 		setSigninError(response.message);
-						// 		return;
-						// 	}
-
-						// 	setSigninSuccess(
-						// 		"Email verification link sent your email address, please check your inbox."
-						// 	);
-						// 	break;
-						default:
-							// setSigninError("An error occurred while signing in");
-							break;
-					}
-
-					return;
+				if (!token) {
+					setSigninSuccess(response?.data?.message);
 				}
 
+				// if (token) {
+				// 	const decodedToken = jwt.verify(token, process.env.JWT_SECRET!);
+				// 	console.log("Verified Token:", decodedToken);
+				// }
+
 				router.push("/");
-			} catch (error) {
+			} catch (error: any) {
 				console.log("signin error", error);
+				setSigninError(error?.response?.data?.error);
 			}
 		});
 	}
@@ -141,17 +95,17 @@ const SignIn = () => {
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className="z-10 space-y-3 min-w-[400px] mx-auto"
+				className="z-10 space-y-3 min-w-[400px] max-w-[500px] mx-auto"
 			>
 				{signinError && (
-					<Alert variant="destructive">
+					<Alert variant="destructive" className="bg-white">
 						<ExclamationTriangleIcon className="h-4 w-4" />
 						<AlertTitle>Error</AlertTitle>
 						<AlertDescription>{signinError}</AlertDescription>
 					</Alert>
 				)}
 				{signinSuccess && (
-					<Alert variant="default" className="border-green-500">
+					<Alert variant="default" className="border-green-500 bg-white">
 						<Check className="h-4 w-4" color="green" />
 						<AlertTitle className="text-green-500 font-medium">
 							Mail sent
