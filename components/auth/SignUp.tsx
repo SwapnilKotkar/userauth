@@ -49,6 +49,15 @@ const SignUp = () => {
 		},
 	});
 
+	const handleGoogleLogin = () => {
+		const googleClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+		const redirectUri = process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI;
+
+		const googleLoginUrl = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=${googleClientId}&redirect_uri=${redirectUri}&scope=openid%20profile%20email`;
+
+		window.location.href = googleLoginUrl; // Redirect the user to Google's login page
+	};
+
 	async function onSubmit(data: z.infer<typeof signUpSchema>) {
 		setSignupError("");
 		setSignupSuccess("");
@@ -186,7 +195,7 @@ const SignUp = () => {
 										type="button"
 										variant="outline"
 										disabled={isPending ? true : false}
-										onClick={() => alert("google123")}
+										onClick={handleGoogleLogin}
 										className="w-full space-x-2 flex items-center border border-foreground/40"
 									>
 										<FaGoogle size={15} color="#DB4437" />
