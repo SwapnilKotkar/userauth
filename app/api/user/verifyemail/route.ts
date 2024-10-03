@@ -3,7 +3,6 @@ import { connectToDatabase } from "@/lib/database";
 import { NextResponse } from "next/server";
 import CryptoJS from "crypto-js";
 import User from "@/models/user.model";
-import { generateTokenAndSetCookie } from "@/lib/generateTokenAndSetCookie";
 
 export async function POST(request: Request) {
 	let body = await request.json();
@@ -69,24 +68,18 @@ export async function POST(request: Request) {
 
 		console.log("DONEEEEEEEEEEEEEEEE", updatedUser);
 
-		let tokenData = {
-			userId: updatedUser._id,
-			email: updatedUser.email,
-			isEmailVerified: updatedUser.isEmailVerified,
-		};
-
-		let response = generateTokenAndSetCookie(tokenData);
-
-		console.log("verifyemail_response", response);
-
-		// return NextResponse.json(
-		// 	{
-		// 		message: "Email is verified successfully",
-		// 	},
-		// 	{ status: 200 }
-		// );
-		return response;
-	} catch (error) {
+		return NextResponse.json(
+			{
+				message: "Email is verified successfully",
+			},
+			{ status: 200 }
+		);
+	} catch (error: any) {
 		console.log("❌ Error while verifying OTP ---", error);
+
+		return NextResponse.json(
+			{ error: "Something went wrong" },
+			{ status: 500 }
+		);
 	}
 }

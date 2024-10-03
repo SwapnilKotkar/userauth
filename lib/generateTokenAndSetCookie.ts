@@ -1,17 +1,20 @@
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 
-export const generateTokenAndSetCookie = (user: any) => {
+export const generateTokenAndSetCookie = (
+	user: any,
+	response: NextResponse
+) => {
 	console.log("generating token......");
 
 	const token = jwt.sign(user, process.env.JWT_SECRET!, {
 		expiresIn: "7d",
 	});
 
-	const response = NextResponse.json(
-		{ message: "Token created and cookie set" },
-		{ status: 200 }
-	);
+	// const response = NextResponse.json(
+	// 	{ message: "Token created and cookie set" },
+	// 	{ status: 200 }
+	// );
 
 	// Set the cookie with NextResponse
 	response.cookies.set("token", token, {

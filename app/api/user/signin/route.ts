@@ -67,7 +67,14 @@ export async function POST(request: Request, response: Response) {
 			isEmailVerified: foundUser.isEmailVerified,
 		};
 
-		let response = generateTokenAndSetCookie(tokenData);
+		// let response = generateTokenAndSetCookie(tokenData);
+
+		let response = NextResponse.json(
+			{ message: "Login successful" },
+			{ status: 200 }
+		) as NextResponse;
+		response = generateTokenAndSetCookie(tokenData, response);
+		return response;
 
 		console.log("signin_response", response);
 

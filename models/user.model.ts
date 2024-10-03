@@ -3,10 +3,8 @@ import { Schema, model, models } from "mongoose";
 const UserSchema = new Schema(
 	{
 		email: { type: String, required: true, unique: true },
-		// username: { type: String, unique: true },
-		password: { type: String, required: true },
+		password: { type: String },
 		image: { type: String },
-		// onboarding: { type: Boolean },
 		providers: {
 			type: Object,
 			of: String,
