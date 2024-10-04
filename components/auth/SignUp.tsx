@@ -58,6 +58,17 @@ const SignUp = () => {
 		window.location.href = googleLoginUrl; // Redirect the user to Google's login page
 	};
 
+	const handleGitHubLogin = () => {
+		const githubClientId = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
+		const redirectUri = process.env.NEXT_PUBLIC_GITHUB_REDIRECT_URI;
+
+		// GitHub authorization URL
+		const githubLoginUrl = `https://github.com/login/oauth/authorize?client_id=${githubClientId}&redirect_uri=${redirectUri}&scope=user:email`;
+
+		// Redirect user to GitHub login page
+		window.location.href = githubLoginUrl;
+	};
+
 	async function onSubmit(data: z.infer<typeof signUpSchema>) {
 		setSignupError("");
 		setSignupSuccess("");
@@ -95,14 +106,14 @@ const SignUp = () => {
 				className="z-10 space-y-3 min-w-[400px] max-w-[500px] mx-auto"
 			>
 				{signupError && (
-					<Alert variant="destructive" className="bg-white">
+					<Alert variant="destructive" className="bg-foreground">
 						<ExclamationTriangleIcon className="h-4 w-4" />
 						<AlertTitle>Error</AlertTitle>
 						<AlertDescription>{signupError}</AlertDescription>
 					</Alert>
 				)}
 				{signupSuccess && (
-					<Alert variant="default" className="bg-white border-green-500">
+					<Alert variant="default" className="bg-foreground border-green-500">
 						<Check className="h-4 w-4" color="green" />
 						<AlertTitle className="text-green-500 font-medium">
 							Success
@@ -196,7 +207,7 @@ const SignUp = () => {
 										variant="outline"
 										disabled={isPending ? true : false}
 										onClick={handleGoogleLogin}
-										className="w-full space-x-2 flex items-center border border-foreground/40"
+										className="w-full space-x-2 flex items-center border border-foreground/20"
 									>
 										<FaGoogle size={15} color="#DB4437" />
 										<span>Sign up with Google</span>
@@ -205,8 +216,8 @@ const SignUp = () => {
 										type="button"
 										variant="outline"
 										disabled={isPending ? true : false}
-										onClick={() => alert("github123")}
-										className="w-full space-x-2 flex items-center border border-foreground/40"
+										onClick={handleGitHubLogin}
+										className="w-full space-x-2 flex items-center border border-foreground/20"
 									>
 										<FaGithub size={15} color="#333" />
 										<span>Sign up with GitHub</span>

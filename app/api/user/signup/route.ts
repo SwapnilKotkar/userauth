@@ -1,7 +1,7 @@
 import { connectToDatabase } from "@/lib/database";
 import { NextResponse } from "next/server";
 import User from "@/models/user.model";
-import { createUser } from "@/lib/actions/user.actions";
+import { createUser, isUserProviderLoggedIn } from "@/lib/actions/user.actions";
 import { createEmailVerificationToken } from "@/lib/mailer";
 import { generateTokenAndSetCookie } from "@/lib/generateTokenAndSetCookie";
 
@@ -15,20 +15,18 @@ export async function POST(request: Request) {
 
 		const isUserExists = await User.findOne({ email: body.email });
 
-		// ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️----PENDING----⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
-		// let isProviderExists = await isUserProviderLoggedIn(isUserExists);
-		// if (isUserExists) {
-		// 	let response = await isUserProviderLoggedIn({ email: body.email });
+		if (isUserExists) {
+			let response = await isUserProviderLoggedIn(isUserExists);
 
-		// 	if (!response.success) {
-		// 		return NextResponse.json(
-		// 			{
-		// 				error: response.error,
-		// 			},
-		// 			{ status: 409 }
-		// 		);
-		// 	}
-		// }
+			if (!response.success) {
+				return NextResponse.json(
+					{
+						error: response.error,
+					},
+					{ status: 409 }
+				);
+			}
+		}
 
 		if (isUserExists && !isUserExists.isEmailVerified) {
 			let response = await createEmailVerificationToken(body.email);

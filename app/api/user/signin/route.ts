@@ -1,6 +1,10 @@
 import { connectToDatabase } from "@/lib/database";
 import { NextResponse } from "next/server";
-import { createUser, hashPassword } from "@/lib/actions/user.actions";
+import {
+	createUser,
+	hashPassword,
+	isUserProviderLoggedIn,
+} from "@/lib/actions/user.actions";
 import User from "@/models/user.model";
 import { createEmailVerificationToken } from "@/lib/mailer";
 import { generateTokenAndSetCookie } from "@/lib/generateTokenAndSetCookie";
@@ -13,21 +17,20 @@ export async function POST(request: Request, response: Response) {
 	try {
 		await connectToDatabase();
 
-		// const isUserExists = await User.findOne({ email: body.email });
+		const isUserExists = await User.findOne({ email: body.email });
 
-		// ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️----PENDING----⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
-		// if (isUserExists) {
-		// 	let response = await isUserProviderLoggedIn(isUserExists);
+		if (isUserExists) {
+			let response = await isUserProviderLoggedIn(isUserExists);
 
-		// 	if (!response.success) {
-		// 		return NextResponse.json(
-		// 			{
-		// 				error: response.error,
-		// 			},
-		// 			{ status: 409 }
-		// 		);
-		// 	}
-		// }
+			if (!response.success) {
+				return NextResponse.json(
+					{
+						error: response.error,
+					},
+					{ status: 409 }
+				);
+			}
+		}
 
 		let foundUser = await User.findOne({
 			email: body.email,

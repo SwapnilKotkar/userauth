@@ -44,20 +44,20 @@ export async function createUser(user: CreateUserParams) {
 	return newUser;
 }
 
-// export async function isUserProviderLoggedIn(userData: any) {
-// 	if (
-// 		userData &&
-// 		userData.providers &&
-// 		Object.keys(userData.providers).length > 0
-// 	) {
-// 		let keys = Object.keys(userData.providers);
+export async function isUserProviderLoggedIn(userData: any) {
+	if (
+		userData &&
+		userData.providers &&
+		Object.keys(userData.providers).length > 0
+	) {
+		let keys = Object.keys(userData.providers);
 
-// 		return {
-// 			success: false,
-// 			error:
-// 				"The email you're trying to sign in with is already linked with the following providers such as google, etc. Please sign in using the respective provider.",
-// 		};
-// 	} else {
-// 		return { success: true, message: "No linked providers found." };
-// 	}
-// }
+		return {
+			success: false,
+			error:
+				"The email you're trying to sign in with is already linked with the following providers such as google, etc. Please sign in using the respective provider.",
+		};
+	} else {
+		return { success: true, message: "No linked providers found." };
+	}
+}

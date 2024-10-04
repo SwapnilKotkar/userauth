@@ -57,25 +57,23 @@ const SignIn = () => {
 		window.location.href = googleLoginUrl; // Redirect the user to Google's login page
 	};
 
+	const handleGitHubLogin = () => {
+		const githubClientId = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
+		const redirectUri = process.env.NEXT_PUBLIC_GITHUB_REDIRECT_URI;
+
+		// GitHub authorization URL
+		const githubLoginUrl = `https://github.com/login/oauth/authorize?client_id=${githubClientId}&redirect_uri=${redirectUri}&scope=user:email`;
+
+		// Redirect user to GitHub login page
+		window.location.href = githubLoginUrl;
+	};
+
 	async function onSubmit(data: z.infer<typeof loginSchema>) {
 		setSigninError("");
 		setSigninSuccess("");
 		console.log("signin data", data);
 		startTransition(async () => {
 			try {
-				// let res = await isUserProviderLoggedIn({
-				// 	email: data.email,
-				// });
-
-				// console.log("res_final", res);
-
-				// if (res.status !== 200) {
-				// 	setSigninError(
-				// 		"The email you're trying to sign in with is already linked with the following providers such as google, etc. Please sign in using the respective provider."
-				// 	);
-				// 	return;
-				// }
-
 				let response = await AXIOS.post("/api/user/signin", data);
 
 				console.log("found_user_data", response);
@@ -107,14 +105,14 @@ const SignIn = () => {
 				className="z-10 space-y-3 min-w-[400px] max-w-[500px] mx-auto"
 			>
 				{signinError && (
-					<Alert variant="destructive" className="bg-white">
+					<Alert variant="destructive" className="bg-foreground">
 						<ExclamationTriangleIcon className="h-4 w-4" />
 						<AlertTitle>Error</AlertTitle>
 						<AlertDescription>{signinError}</AlertDescription>
 					</Alert>
 				)}
 				{signinSuccess && (
-					<Alert variant="default" className="border-green-500 bg-white">
+					<Alert variant="default" className="border-green-500 bg-foreground">
 						<Check className="h-4 w-4" color="green" />
 						<AlertTitle className="text-green-500 font-medium">
 							Mail sent
@@ -199,7 +197,7 @@ const SignIn = () => {
 										variant="outline"
 										disabled={isPending ? true : false}
 										onClick={handleGoogleLogin}
-										className="w-full space-x-2 flex items-center border border-foreground/40"
+										className="w-full space-x-2 flex items-center border border-foreground/20"
 									>
 										<FaGoogle size={15} color="#DB4437" />
 										<span>Login with Google</span>
@@ -208,8 +206,8 @@ const SignIn = () => {
 										type="button"
 										variant="outline"
 										disabled={isPending ? true : false}
-										onClick={() => alert("github")}
-										className="w-full space-x-2 flex items-center border border-foreground/40"
+										onClick={handleGitHubLogin}
+										className="w-full space-x-2 flex items-center border border-foreground/20"
 									>
 										<FaGithub size={15} color="#333" />
 										<span>Login with GitHub</span>
