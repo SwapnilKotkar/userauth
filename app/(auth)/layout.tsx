@@ -29,7 +29,7 @@ export default async function AuthLayout({
 			>
 				<ThemeProvider
 					attribute="class"
-					defaultTheme="dark-blue"
+					defaultTheme="light-green"
 					enableSystem
 					disableTransitionOnChange
 					themes={[

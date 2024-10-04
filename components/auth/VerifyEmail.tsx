@@ -38,11 +38,6 @@ const VerifyEmail = () => {
 					emailToken: token,
 				});
 
-				// let response = await verifyEmailToken({
-				// 	email: email,
-				// 	emailToken: token,
-				// });
-
 				console.log("verify_otp_res", response);
 
 				const tokenData = Cookies.get("token");
@@ -55,26 +50,6 @@ const VerifyEmail = () => {
 				setTimeout(() => {
 					router.push("/signin");
 				}, 1500);
-
-				// if (response.data.message) {
-				// 	setEmailSuccess(response.data.message);
-				// } else {
-				// 	setemailError(response.data.error);
-				// }
-
-				// if (response.status !== 200) {
-				// 	setemailError(response.data.message);
-				// 	return;
-				// }
-
-				// setEmailSuccess("Email verified successfully");
-
-				// const result = await signIn("credentials", {
-				// 	redirect: false,
-				// 	email: email,
-				// });
-
-				// console.log("res123", result);
 			} catch (error: any) {
 				console.error("�� Error while verifying email---", error.response);
 				setemailError(error?.response?.data?.error);
@@ -85,14 +60,14 @@ const VerifyEmail = () => {
 	return (
 		<div className="z-10 space-y-3 min-w-[400px] max-w-[500px] mx-auto">
 			{emailError && (
-				<Alert variant="destructive">
+				<Alert variant="destructive" className="bg-background">
 					<ExclamationTriangleIcon className="h-4 w-4" />
 					<AlertTitle>Verify error</AlertTitle>
 					<AlertDescription>{emailError}</AlertDescription>
 				</Alert>
 			)}
 			{emailSuccess && (
-				<Alert variant="default" className="border-green-500">
+				<Alert variant="default" className="border-green-500 bg-background">
 					<Check className="h-4 w-4" color="green" />
 					<AlertTitle className="text-green-500 font-medium">
 						Success

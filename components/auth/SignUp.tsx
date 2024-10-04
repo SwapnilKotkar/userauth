@@ -106,14 +106,14 @@ const SignUp = () => {
 				className="z-10 space-y-3 min-w-[400px] max-w-[500px] mx-auto"
 			>
 				{signupError && (
-					<Alert variant="destructive" className="bg-foreground">
+					<Alert variant="destructive" className="bg-background">
 						<ExclamationTriangleIcon className="h-4 w-4" />
 						<AlertTitle>Error</AlertTitle>
 						<AlertDescription>{signupError}</AlertDescription>
 					</Alert>
 				)}
 				{signupSuccess && (
-					<Alert variant="default" className="bg-foreground border-green-500">
+					<Alert variant="default" className="bg-background border-green-500">
 						<Check className="h-4 w-4" color="green" />
 						<AlertTitle className="text-green-500 font-medium">
 							Success

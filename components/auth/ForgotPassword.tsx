@@ -79,14 +79,14 @@ const ForgotPassword = () => {
 				className="z-10 space-y-3 min-w-[400px] max-w-[500px] mx-auto"
 			>
 				{passwordError && (
-					<Alert variant="destructive" className="bg-foreground">
+					<Alert variant="destructive" className="bg-background">
 						<ExclamationTriangleIcon className="h-4 w-4" />
 						<AlertTitle>Error</AlertTitle>
 						<AlertDescription>{passwordError}</AlertDescription>
 					</Alert>
 				)}
 				{passwordSuccess && (
-					<Alert variant="default" className="border-green-500 bg-foreground">
+					<Alert variant="default" className="border-green-500 bg-background">
 						<Check className="h-4 w-4" color="green" />
 						<AlertTitle className="text-green-500 font-medium">
 							Success
