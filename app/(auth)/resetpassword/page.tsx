@@ -1,6 +1,11 @@
 import ResetPassword from "@/components/auth/ResetPassword";
 import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
 import React, { Suspense } from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Reset password",
+};
 
 const page = () => {
 	return (

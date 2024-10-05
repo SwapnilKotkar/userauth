@@ -1,6 +1,11 @@
 import SignUp from "@/components/auth/SignUp";
 import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
 import React from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Signup",
+};
 
 const page = () => {
 	return (
