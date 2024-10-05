@@ -209,7 +209,7 @@ const SignUp = () => {
 										onClick={handleGoogleLogin}
 										className="w-full space-x-2 flex items-center border border-foreground/20"
 									>
-										<FaGoogle size={15} color="#DB4437" />
+										<FaGoogle size={15} className="text-[#DB4437]" />
 										<span>Sign up with Google</span>
 									</Button>
 									<Button
@@ -219,7 +219,7 @@ const SignUp = () => {
 										onClick={handleGitHubLogin}
 										className="w-full space-x-2 flex items-center border border-foreground/20"
 									>
-										<FaGithub size={15} color="#333" />
+										<FaGithub size={15} className="text-[#333]" />
 										<span>Sign up with GitHub</span>
 									</Button>
 								</div>

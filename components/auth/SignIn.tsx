@@ -90,7 +90,7 @@ const SignIn = () => {
 				// 	console.log("Verified Token:", decodedToken);
 				// }
 
-				router.push("/");
+				router.push("/home");
 			} catch (error: any) {
 				console.log("signin error", error);
 				setSigninError(error?.response?.data?.error);
@@ -199,7 +199,7 @@ const SignIn = () => {
 										onClick={handleGoogleLogin}
 										className="w-full space-x-2 flex items-center border border-foreground/20"
 									>
-										<FaGoogle size={15} color="#DB4437" />
+										<FaGoogle size={15} className="text-[#DB4437]" />
 										<span>Login with Google</span>
 									</Button>
 									<Button
@@ -209,7 +209,7 @@ const SignIn = () => {
 										onClick={handleGitHubLogin}
 										className="w-full space-x-2 flex items-center border border-foreground/20"
 									>
-										<FaGithub size={15} color="#333" />
+										<FaGithub size={15} className="text-[#333]" />
 										<span>Login with GitHub</span>
 									</Button>
 								</div>

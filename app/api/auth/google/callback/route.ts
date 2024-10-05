@@ -89,7 +89,7 @@ export async function GET(request: Request) {
 			isEmailVerified: updatedUser.isEmailVerified,
 		};
 
-		let response = NextResponse.redirect(new URL("/", request.url));
+		let response = NextResponse.redirect(new URL("/home", request.url));
 
 		response = generateTokenAndSetCookie(tokenData, response);
 
