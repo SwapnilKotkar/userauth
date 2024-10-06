@@ -58,9 +58,10 @@
 
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
+import { jwtVerify } from "jose";
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
 	const url = request.nextUrl;
 	const publicRoutes = [
 		"/signin",
@@ -75,7 +76,41 @@ export function middleware(request: NextRequest) {
 	const resetPasswordToken = url.searchParams.get("resetpasswordtoken");
 
 	// Get the token from the request cookies
-	const token = request.cookies.get("token")?.value;
+	const token = request.cookies.get("token")?.value || "";
+
+	// Got edge runtime erorr on below IF condition
+	// if (token) {
+	// 	try {
+	// 		let decodedToken = jwt.verify(
+	// 			token,
+	// 			process.env.JWT_SECRET!
+	// 		) as JwtPayload;
+
+	// 		console.log("decodedToken111---", decodedToken);
+	// 		if (decodedToken.exp && decodedToken.exp * 1000 < Date.now()) {
+	// 			return NextResponse.redirect(new URL("/signin", request.nextUrl));
+	// 		}
+	// 	} catch (error: any) {
+	// 		console.log("Middleware_token error************", error);
+	// 		return NextResponse.redirect(new URL("/signin", request.nextUrl));
+	// 	}
+	// }
+
+	//got error on catch block for invalid token but not redirecting to /signin page
+	// if (token) {
+	// 	try {
+	// 		const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
+	// 		const { payload } = await jwtVerify(token, secret);
+
+	// 		console.log("decodedToken111---", payload);
+	// 		if (payload.exp && payload.exp * 1000 < Date.now()) {
+	// 			return NextResponse.redirect(new URL("/signin", request.nextUrl));
+	// 		}
+	// 	} catch (error) {
+	// 		console.log("Middleware_token error************", error);
+	// 		return NextResponse.redirect(new URL("/signin", request.nextUrl));
+	// 	}
+	// }
 
 	// If no token and trying to access a protected route
 	if (!token && !publicRoutes.includes(url.pathname)) {
